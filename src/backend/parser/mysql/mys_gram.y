@@ -2686,6 +2686,13 @@ VariableShowStmt:
 
 					$$ = (Node *)selectStmt;
                 }
+            | SHOW ENGINE ColId STATUS
+			    {
+                    ereport(ERROR,
+                            (errcode(ERRCODE_FEATURE_NOT_SUPPORTED),
+                             errmsg("Halo does not support 'show engine ** status'."),
+                             parser_errposition(@1)));
+                }
             | SHOW PLUGINS
                 {
                     /* select * from mys_informa_schema.plugins; */
